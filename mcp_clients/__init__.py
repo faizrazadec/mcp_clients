@@ -27,7 +27,7 @@ Example:
     >>> asyncio.run(main())
 
 Author: Muhammad Faiz Raza
-Version: 0.0.1
+Version: 0.0.2
 """
 
 from .gemini import Gemini

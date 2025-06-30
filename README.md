@@ -2,7 +2,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/faizraza/mcp-clients)
+[![Version](https://img.shields.io/badge/version-0.0.2-blue.svg)](https://github.com/faizraza/mcp-clients)
 
 A powerful and easy-to-use Python package for creating **Model Context Protocol (MCP)** clients that seamlessly integrate with AI models and external tools. Currently supports Google's **Gemini AI** with plans for additional model integrations.
 

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mcp-clients"
-version = "0.0.1"
+version = "0.0.2"
 description = "A powerful Python library for creating Model Context Protocol (MCP) clients with seamless AI model integration"
 readme = "README.md"
 license = "MIT"
