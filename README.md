@@ -2,21 +2,21 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/faizraza/mcp-clients)
+[![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/faizraza/mcp-clients)
 
 A powerful and easy-to-use Python package for creating **Model Context Protocol (MCP)** clients that seamlessly integrate with AI models and external tools. Currently supports Google's **Gemini AI** with plans for additional model integrations.
 
-## 🚀 Features
+## Features
 
-- **🤖 Gemini AI Integration**: Built-in support for Google's Gemini models
-- **🔗 MCP Protocol Support**: Seamless integration with MCP servers
-- **🛠️ Tool Calling**: Automatic tool discovery and execution
-- **💬 Interactive Chat**: Built-in chat interface with conversation history
-- **🎨 Customizable**: Support for custom chat loops and system instructions
-- **🔧 Easy Setup**: Simple configuration with environment variables
-- **⚡ Async/Await**: Fully asynchronous for optimal performance
+- ** Gemini AI Integration**: Built-in support for Google's Gemini models
+- ** MCP Protocol Support**: Seamless integration with MCP servers
+- ** Tool Calling**: Automatic tool discovery and execution
+- ** Interactive Chat**: Built-in chat interface with conversation history
+- ** Customizable**: Support for custom chat loops and system instructions
+- ** Easy Setup**: Simple configuration with environment variables
+- ** Async/Await**: Fully asynchronous for optimal performance
 
-## 📦 Installation
+## Installation
 
 Install using pip:
 
@@ -24,21 +24,19 @@ Install using pip:
 pip install mcp-clients
 ```
 
-Or install from source:
+Or install from uv:
 
 ```bash
-git clone https://github.com/yourusername/mcp-clients
-cd mcp-clients
-pip install -e .
+uv add mcp-clients
 ```
 
-## 🔧 Prerequisites
+## Prerequisites
 
 - **Python 3.12+**
 - **Google Gemini API Key** - Get yours from [Google AI Studio](https://makersuite.google.com/)
 - **MCP Server** - A Model Context Protocol server (Python or JavaScript)
 
-## ⚙️ Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -58,7 +56,7 @@ MCP_SERVER=/path/to/your/mcp_server.py
 2. Create a new API key
 3. Add it to your `.env` file or pass it directly to the client
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Basic Usage
 
@@ -85,41 +83,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-```
-
-### Programmatic Usage
-
-```python
-import asyncio
-from mcp_clients import Gemini
-
-async def query_example():
-    client = await Gemini.init(
-        api_key="your-api-key",
-        server_script_path="weather_server.py",
-        system_instruction="You are a weather assistant."
-    )
-    
-    try:
-        # Process a single query
-        response = await client.process_query("What's the weather like in New York?")
-        print(response)
-        
-        # Process multiple queries
-        queries = [
-            "Tell me about the weather in California",
-            "Are there any weather alerts for Texas?"
-        ]
-        
-        for query in queries:
-            response = await client.process_query(query)
-            print(f"Q: {query}")
-            print(f"A: {response}\n")
-            
-    finally:
-        await client.cleanup()
-
-asyncio.run(query_example())
 ```
 
 ### Custom Chat Loop
@@ -168,7 +131,7 @@ async def main():
         await client.cleanup()
 ```
 
-## 📚 API Reference
+## API Reference
 
 ### Gemini Class
 
@@ -193,7 +156,7 @@ client = await Gemini.init(
 - **`cleanup()`**: Clean up resources (always call this!)
 - **`connect_to_server()`**: Manually connect to MCP server
 
-## 🛠️ MCP Server Example
+## MCP Server Example
 
 Here's a simple weather MCP server example:
 
@@ -216,22 +179,6 @@ async def get_forecast(city: str, days: int = 3) -> str:
 
 if __name__ == "__main__":
     mcp.run()
-```
-
-## 📁 Project Structure
-
-```
-mcp-clients/
-├── mcp_clients/
-│   ├── __init__.py          # Package initialization and exports
-│   ├── gemini.py           # Gemini client implementation
-│   └── version.py          # Version information
-├── examples/
-│   └── quickstart.py       # Quick start example
-├── tests/                  # Test files (coming soon)
-├── README.md               # This file
-├── pyproject.toml          # Project configuration
-└── .env.example           # Environment variables example
 ```
 
 ## 🔍 Troubleshooting
@@ -259,15 +206,6 @@ mcp-clients/
    - Install the package: `pip install mcp-clients`
    - If installing from source: `pip install -e .`
 
-### Debug Mode
-
-Enable verbose logging:
-
-```python
-import logging
-logging.basicConfig(level=logging.DEBUG)
-```
-
 ## 🧪 Examples
 
 Check out the `examples/` directory for more usage examples:
@@ -276,7 +214,7 @@ Check out the `examples/` directory for more usage examples:
 - **Weather Bot**: Weather information assistant
 - **Custom Tools**: Creating and using custom MCP tools
 
-## 🚧 Roadmap
+## Roadmap
 
 - [ ] **Additional Model Support**: OpenAI GPT, Anthropic Claude
 - [ ] **Advanced Tool Management**: Tool discovery and validation
@@ -287,7 +225,7 @@ Check out the `examples/` directory for more usage examples:
 
 ## 🤝 Contributing
 
-We welcome contributions! Here's how you can help:
+I welcome contributions! Here's how you can help:
 
 ### Getting Started
 
@@ -299,10 +237,9 @@ We welcome contributions! Here's how you can help:
 
 2. **Set up development environment**
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   pip install -e .
-   pip install -r requirements-dev.txt
+   uv venv
+   source .venv/bin/activate  # On Windows: venv\Scripts\activate
+   uv sync
    ```
 
 3. **Create a feature branch**
@@ -320,11 +257,11 @@ We welcome contributions! Here's how you can help:
 
 ### Types of Contributions
 
-- 🐛 **Bug Fixes**: Fix issues and improve stability
-- ✨ **New Features**: Add new models, tools, or capabilities
-- 📚 **Documentation**: Improve docs, examples, and tutorials
-- 🧪 **Testing**: Add tests and improve test coverage
-- 🎨 **UI/UX**: Improve user experience and interfaces
+- **Bug Fixes**: Fix issues and improve stability
+- **New Features**: Add new models, tools, or capabilities
+- **Documentation**: Improve docs, examples, and tutorials
+- **Testing**: Add tests and improve test coverage
+- **UI/UX**: Improve user experience and interfaces
 
 ### Submitting Changes
 
@@ -335,7 +272,8 @@ We welcome contributions! Here's how you can help:
 
 2. **Format code**
    ```bash
-   black mcp_clients/
+   cd mcp_clients/
+   black .
    ```
 
 3. **Submit a pull request**
@@ -347,22 +285,16 @@ We welcome contributions! Here's how you can help:
 
 Please be respectful and inclusive. We're building this together! 🌟
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Google** for the Gemini AI API
 - **Anthropic** for the Model Context Protocol specification
 - **FastMCP** for the excellent MCP server framework
 - **Contributors** who help make this project better
-
-## 💬 Support
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/mcp-clients/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/mcp-clients/discussions)
-- **Email**: your.email@example.com
 
 ---
 
