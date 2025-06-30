@@ -8,13 +8,13 @@ A powerful and easy-to-use Python package for creating **Model Context Protocol 
 
 ## Features
 
-- ** Gemini AI Integration**: Built-in support for Google's Gemini models
-- ** MCP Protocol Support**: Seamless integration with MCP servers
-- ** Tool Calling**: Automatic tool discovery and execution
-- ** Interactive Chat**: Built-in chat interface with conversation history
-- ** Customizable**: Support for custom chat loops and system instructions
-- ** Easy Setup**: Simple configuration with environment variables
-- ** Async/Await**: Fully asynchronous for optimal performance
+- **Gemini AI Integration**: Built-in support for Google's Gemini models
+- **MCP Protocol Support**: Seamless integration with MCP servers
+- **Tool Calling**: Automatic tool discovery and execution
+- **Interactive Chat**: Built-in chat interface with conversation history
+- **Customizable**: Support for custom chat loops and system instructions
+- **Easy Setup**: Simple configuration with environment variables
+- **Async/Await**: Fully asynchronous for optimal performance
 
 ## Installation
 
