@@ -1,14 +1,17 @@
-# MCP Clients
+# Python MCP Clients: Framework for LLM-Driven Tool Orchestration
 
 [![Python Version](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.0.2-blue.svg)](https://github.com/faizraza/mcp-clients)
+[![Version](https://img.shields.io/badge/version-0.0.3-blue.svg)](https://github.com/faizraza/mcp-clients)
+[![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen.svg)](https://github.com/faizraza/mcp-clients)
+[![MCP](https://img.shields.io/badge/MCP-Compatible-orange.svg)](https://modelcontextprotocol.io)
+[![PyPI version](https://img.shields.io/pypi/v/mcp-clients.svg)](https://pypi.org/project/mcp-clients/)
 
-A powerful and easy-to-use Python package for creating **Model Context Protocol (MCP)** clients that seamlessly integrate with AI models and external tools. Currently supports Google's **Gemini AI** with plans for additional model integrations.
+`mcp-clients` is an open-source Python SDK designed for building and orchestrating LLM-powered tools using the **Model Context Protocol (MCP)**. It allows seamless integration with **OpenAI** and **Gemini**, enabling natural language interactions with databases, file systems, APIs, and more. Developers can easily connect to multiple MCP servers through a unified interface and create intelligent agents that interact with real-world tools. It is free to use, modify, and distribute under the **MIT license**.
 
 ## Features
 
-- **Gemini AI Integration**: Built-in support for Google's Gemini models
+- **AI Models Integration**: Built-in support for Google's Gemini and OpenAI models
 - **MCP Protocol Support**: Seamless integration with MCP servers
 - **Tool Calling**: Automatic tool discovery and execution
 - **Interactive Chat**: Built-in chat interface with conversation history
@@ -30,12 +33,6 @@ Or install from uv:
 uv add mcp-clients
 ```
 
-## Prerequisites
-
-- **Python 3.12+**
-- **Google Gemini API Key** - Get yours from [Google AI Studio](https://makersuite.google.com/)
-- **MCP Server** - A Model Context Protocol server (Python or JavaScript)
-
 ## Configuration
 
 ### Environment Variables
@@ -43,43 +40,60 @@ uv add mcp-clients
 Create a `.env` file in your project root:
 
 ```env
-# Required: Your Gemini API key
-GEMINI_API_KEY=your_gemini_api_key_here
+# Required: Your API key
+YOUR_API_KEY=your_api_key_here
 
-# Optional: Default MCP server path
+# Required: Your MCP server path
 MCP_SERVER=/path/to/your/mcp_server.py
 ```
 
-### API Key Setup
-
-1. Visit [Google AI Studio](https://makersuite.google.com/)
-2. Create a new API key
-3. Add it to your `.env` file or pass it directly to the client
-
 ## Quick Start
 
-### Basic Usage
+### Basic Usage with Gemini
 
 ```python
 import asyncio
 from dotenv import load_dotenv
+
+from mcp_clients import OpenAI
+
+load_dotenv()
+
+
+async def main():
+    client = await OpenAI.init(
+        server_script_path="path_to_server_script",
+    )
+    try:
+        await client.chat_loop()
+    finally:
+        await client.cleanup()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+### Basic Usage with Gemini
+
+```python
+import asyncio
+from dotenv import load_dotenv
+
 from mcp_clients import Gemini
 
 load_dotenv()
 
+
 async def main():
-    # Initialize the client
     client = await Gemini.init(
-        server_script_path='path/to/your/mcp_server.py',
-        system_instruction='You are a helpful assistant.'
+        server_script_path="path_to_server_script",
     )
-    
     try:
-        # Start interactive chat
         await client.chat_loop()
     finally:
-        # Clean up resources
         await client.cleanup()
+
 
 if __name__ == "__main__":
     asyncio.run(main())
@@ -90,7 +104,7 @@ if __name__ == "__main__":
 ```python
 async def custom_chat_handler(client):
     """Custom chat loop with enhanced features"""
-    print("🤖 Enhanced Chat Started!")
+    print("Enhanced Chat Started!")
     print("Commands: 'help', 'history', 'clear', 'quit'")
     
     while True:
@@ -116,7 +130,7 @@ async def custom_chat_handler(client):
         except KeyboardInterrupt:
             break
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f"Error: {e}")
 
 # Use the custom chat loop
 async def main():
@@ -135,7 +149,7 @@ async def main():
 
 ### Gemini Class
 
-The main client class for interacting with Gemini AI through MCP servers.
+The Gemini client class for interacting with Gemini AI through MCP servers.
 
 #### Initialization
 
@@ -149,37 +163,28 @@ client = await Gemini.init(
 )
 ```
 
+### OpenAI Class
+
+The OpenAI client class for interacting with Gemini AI through MCP servers.
+
+#### Initialization
+
+```python
+client = await OpenAI.init(
+    api_key=None,                    # Gemini API key (or use env var)
+    server_script_path=None,         # Path to MCP server script
+    model="gpt-4.1-nano",            # OpenAI model to use
+    system_instruction=None,         # Custom system instruction
+    custom_chat_loop=None            # Custom chat loop function
+)
+```
+
 #### Methods
 
 - **`process_query(query: str) -> str`**: Process a single query
 - **`chat_loop()`**: Start interactive chat session
 - **`cleanup()`**: Clean up resources (always call this!)
 - **`connect_to_server()`**: Manually connect to MCP server
-
-## MCP Server Example
-
-Here's a simple weather MCP server example:
-
-```python
-from mcp.server.fastmcp import FastMCP
-
-mcp = FastMCP("weather")
-
-@mcp.tool()
-async def get_weather(city: str) -> str:
-    """Get weather information for a city."""
-    # Your weather API logic here
-    return f"The weather in {city} is sunny and 72°F"
-
-@mcp.tool()
-async def get_forecast(city: str, days: int = 3) -> str:
-    """Get weather forecast for a city."""
-    # Your forecast logic here
-    return f"3-day forecast for {city}: Sunny, Partly Cloudy, Rainy"
-
-if __name__ == "__main__":
-    mcp.run()
-```
 
 ## 🔍 Troubleshooting
 
@@ -189,7 +194,7 @@ if __name__ == "__main__":
    ```
    Error: Invalid API key
    ```
-   - Ensure your Gemini API key is correct
+   - Ensure your API key is correct
    - Check that the API key is properly set in your environment
 
 2. **Server Connection Issues**
@@ -203,27 +208,17 @@ if __name__ == "__main__":
    ```
    ModuleNotFoundError: No module named 'mcp_clients'
    ```
-   - Install the package: `pip install mcp-clients`
+   - Install the package: `pip install mcp-clients` or `uv add mcp-clients`
    - If installing from source: `pip install -e .`
 
-## 🧪 Examples
+## Examples
 
 Check out the `examples/` directory for more usage examples:
 
-- **Basic Usage**: Simple chat with MCP tools
-- **Weather Bot**: Weather information assistant
-- **Custom Tools**: Creating and using custom MCP tools
+- **gemini_client**: Simple chat with MCP tools using Gemini.
+- **openai_client**: Simple chat with MCP tools using OpenAI.
 
-## Roadmap
-
-- [ ] **Additional Model Support**: OpenAI GPT, Anthropic Claude
-- [ ] **Advanced Tool Management**: Tool discovery and validation
-- [ ] **Streaming Responses**: Real-time response streaming
-- [ ] **Session Management**: Persistent conversation sessions
-- [ ] **Plugin System**: Extensible plugin architecture
-- [ ] **Web Interface**: Optional web-based chat interface
-
-## 🤝 Contributing
+## Contributing
 
 I welcome contributions! Here's how you can help:
 
@@ -231,7 +226,7 @@ I welcome contributions! Here's how you can help:
 
 1. **Fork the repository**
    ```bash
-   git clone https://github.com/yourusername/mcp-clients.git
+   git clone https://github.com/faizrazadec/mcp-clients.git
    cd mcp-clients
    ```
 
@@ -291,7 +286,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- **Google** for the Gemini AI API
 - **Anthropic** for the Model Context Protocol specification
 - **FastMCP** for the excellent MCP server framework
 - **Contributors** who help make this project better

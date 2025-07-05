@@ -28,6 +28,7 @@ Example:
 
 import os
 from typing import Optional
+from urllib import response
 from mcp import ClientSession, StdioServerParameters
 from contextlib import AsyncExitStack
 from google import genai
@@ -38,7 +39,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-class Gemini:
+class GeminiClient:
     """
     A client for Google's Gemini AI model with MCP server integration.
 
@@ -234,7 +235,8 @@ class Gemini:
         response = self._client.models.generate_content(
             model=self.model,
             config=types.GenerateContentConfig(
-                system_instruction=self.system_instruction, tools=[gemini_tools]
+                system_instruction=self.system_instruction,
+                tools=[gemini_tools]
             ),
             contents=self.history,
         )
@@ -269,16 +271,32 @@ class Gemini:
                 }
             )
 
-            final_response = self._client.models.generate_content(
+            fallback_response = self._client.models.generate_content(
                 model=self.model,
-                config=types.GenerateContentConfig(tools=[gemini_tools]),
+                config=types.GenerateContentConfig(
+                    tools=[gemini_tools]
+                ),
                 contents=self.history,
             )
-            print(final_response.text)
+
+            self.history.append({
+                "role": "model",
+                "parts": [{
+                    "text": fallback_response.text
+                }]
+            })
+
+            final_text.append(fallback_response.text)
 
         else:
             print("No function call found in the response.")
-            self.history.append({"role": "model", "parts": [{"text": response.text}]})
+
+            self.history.append({
+                "role": "model", 
+                "parts": [{
+                    "text": response.text
+                }]
+            })
 
             final_text.append(response.text)
 
