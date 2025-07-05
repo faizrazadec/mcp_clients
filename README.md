@@ -2,7 +2,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.0.3-blue.svg)](https://github.com/faizraza/mcp-clients)
+[![Version](https://img.shields.io/badge/version-0.0.4-blue.svg)](https://github.com/faizraza/mcp-clients)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen.svg)](https://github.com/faizraza/mcp-clients)
 [![MCP](https://img.shields.io/badge/MCP-Compatible-orange.svg)](https://modelcontextprotocol.io)
 [![PyPI version](https://img.shields.io/pypi/v/mcp-clients.svg)](https://pypi.org/project/mcp-clients/)

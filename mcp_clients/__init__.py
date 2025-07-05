@@ -45,9 +45,6 @@ Examples:
     ...         await client.cleanup()
     >>> 
     >>> asyncio.run(main())
-
-Author: Muhammad Faiz Raza
-Version: 0.0.3
 """
 
 from .gemini_client import GeminiClient as Gemini
