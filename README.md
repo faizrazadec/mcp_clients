@@ -49,7 +49,7 @@ MCP_SERVER=/path/to/your/mcp_server.py
 
 ## Quick Start
 
-### Basic Usage with Gemini
+### Basic Usage with OpenAI
 
 ```python
 import asyncio
